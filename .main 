@@ -1,0 +1,47 @@
+private String random;
+private String charsEntered;
+private EditText et;
+private Button ok;
+CaptchaInterface.OnCorrectListener mCorrectListener;
+
+public void setOnCorrectListener(CaptchaInterface.OnCorrectListener listener) {
+    mCorrectListener = listener;
+}
+
+public TextCaptcha(Context context) {
+    super(context);
+    getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+}
+
+public static String random() {
+    Random generator = new Random();
+    String x = (String) (generator.nextInt(96) + 32);
+    return x;
+}
+
+public void onCreate(Bundle icicle) {
+    setContentView(R.layout.main);
+    random = random();
+    TextView display = (TextView) findViewById(R.id.textView1);
+    display.setText("Random Number: " + random); // Show the random number
+    et = (EditText) findViewById(R.id.etNumbers);
+    ok = (Button) findViewById(R.id.button1);
+    ok.setOnClickListener(this);
+
+}
+
+public void onClick(View arg0) {
+    // TODO Auto-generated method stub
+    try {
+        charsEntered = et.getText().toString();
+    } catch (NumberFormatException nfe) {
+        Toast.makeText(et.getContext(), "Bla bla bla",
+                Toast.LENGTH_LONG).show();
+    }
+
+    if (random == charsEntered) {
+        Toast.makeText(et.getContext(), "Good!", Toast.LENGTH_LONG).show();
+    } else {
+        Toast.makeText(et.getContext(), "Bad!", Toast.LENGTH_LONG).show();
+    }
+}
